@@ -225,3 +225,472 @@ for (const key in obj) {
   const value = obj[key];
 }
 ```
+
+Class Examples
+
+```js
+console.log('Hi! 👋');
+
+// DATA TYPES
+// Primitive / Inmutable values
+const string = 'Hello!';
+const number = 10;
+const boolean = true;
+const undef = undefined;
+const nul = null;
+
+// Mutable values
+const array = [1, 2, 4];
+const objects = { color: 'blue' };
+
+// OBJECTS
+// object = { key: value }
+const user = {
+  firstName: 'Pedro',
+  lastName: 'González'
+};
+
+// dot notation
+console.log('dot notation', user.firstName);
+
+// bracket notation
+console.log('brackets notation', user['firstName']);
+
+const lastName = 'firstName';
+console.log('29', user.lastName);
+console.log('30', user[lastName]);
+
+// arrays: we access to its values by a position index
+const numbersArray = [1, 2, 3, 4];
+console.log(numbersArray[1]); //2
+
+// bonus! adding extra items to an array by its position with brackets notation
+numbersArray[100] = 'im at position 100!';
+numbersArray[50] = [1, 2, 3];
+console.log(numbersArray.length);
+console.log(numbersArray);
+
+// objects: we access to its values by a key property
+const numbersObject = { 1: 10, 2: 20, 3: 30 };
+
+//accesing nested objects in an object
+const mixObject = {
+  1: 10,
+  2: 20,
+  3: 30,
+  4: 40,
+  myKey: 'red',
+  otherKey: 30,
+  100: {
+    details: {
+      color: 'red',
+      name: 'Ferrari'
+    }
+  }
+};
+
+// we cannot use dot notation for numbers as keys
+console.log(mixObject[1]);
+console.log(mixObject['myKey']);
+
+// we can use a mix of dot notation or brackets to access nested objects
+console.log(mixObject[100]['details']['name']);
+console.log(mixObject[100].details.name);
+
+// bonus! adding extra key/value pairs by using dot or brackets notation
+mixObject.title = 'My amazing title!';
+mixObject['description'] = 'This is my awesome and super cool title!';
+
+mixObject[100].details.engine = 'V12';
+
+console.log(mixObject);
+
+// PASSING OBJECTS AS ARGUMENTS IN FUNCTIONS
+const carObject = {
+  name: 'Ferrari',
+  color: 'red'
+};
+console.log(carObject);
+
+// Mutating an internal property
+const paintCar = function(car) {
+  car.color = 'blue';
+};
+paintCar(carObject);
+console.log(carObject);
+
+// Reassigning a full object
+const changeCar = function(car) {
+  car = {};
+  console.log('inside changeCar!', car);
+  return car;
+};
+
+changeCar(carObject);
+console.log(carObject);
+
+// adding extra properties within the object
+const addSpeakers = function(car) {
+  car.speakers = 'boom boOoOom!! 🔊';
+};
+
+addSpeakers(carObject);
+console.log(carObject);
+
+// FUNCTIONS INSIDE OBJECTS
+// object {
+//  key1: value1,
+//  key2: value2,
+//  method1(),
+//  method2()
+// }
+
+const cat = {
+  name: 'Garfield',
+  color: 'orange',
+  getFood: function() {
+    console.log('Give me foood! 🍝');
+  }
+};
+
+cat.getFood();
+
+const person = {
+  firstName: 'Nikko',
+  lastName: 'Bansil',
+  sayFullName: function() {
+    console.log(${this.firstName} ${this.lastName});
+    console.log(this);
+  }
+};
+
+person.sayFullName();
+
+// ITERATE THROUGH OBJECT KEY/VALUES
+const fruit = {
+  name: 'apple',
+  color: 'green',
+  emoji: '🍏'
+};
+
+// FOR OF
+const fruitKeys = Object.keys(fruit);
+console.log(fruitKeys);
+
+for (const key of fruitKeys) {
+  console.log(fruit[key]);
+}
+
+// FOR IN
+for (const key in fruit) {
+  console.log(fruit[key]);
+}
+
+// IN JS EVERYTHING IS INTERNALLY AN OBJECT! 🤯
+const myString = 'hello!';
+console.log(myString.proto);
+```
+
+
+
+### Module01 Week02 Day01 - Callbacks
+
+### Functions as Values
+- Just like everything else in JavaScript, functions are values
+- As a result, they can be stored in variables just like any other value
+
+```js
+const myFunction = function() {
+  // do something
+};
+```
+
+- They can also be passed around just like any other variable
+
+```js
+const myFunction = function() {
+  // do something
+}
+const myVar = myFunction;
+myVar(); // equivalent to calling myFunction()
+```
+- And they can be passed to other functions as arguments
+
+```js
+const myFunction = function() {
+  // do something
+}
+const myHigherOrderFunction = function(callback) {
+  callback(); // equivalent to myFunction()
+}
+myHigherOrderFunction(myFunction);
+```
+### Callbacks and Higher Order Functions
+- A callback is a function that gets passed to another function to be executed by that function
+- Callback functions are used all over the place in JavaScript
+- They encapsulate reusable code that can be passed around like any other JS variable
+- We call the function that accepts another function as an argument a higher order function
+
+### Anonymous Functions
+- We can pass callback functions _inline_ to a higher order function rather than storing the callback in a variable first
+
+```js
+const myHigherOrderFunction = function(callback) {
+  callback();
+}
+// the function we pass as an argument has no name
+myHigherOrderFunction(function() {});
+```
+
+- Anonymous functions are simply functions that do not have a name
+- [Naming things is hard](https://martinfowler.com/bliki/TwoHardThings.html)
+
+### Arrow Functions
+- Arrow functions give us a syntactic alternative to using the function keyword
+
+```js
+// function keyword
+const myFunc = function() {
+  // do something
+};
+// arrow function
+const myArrowFunc = () => {
+  // do something
+};
+```
+- There are some _gotchas_ around using the this keyword inside an arrow function, but if you aren't using this, arrow functions can be used interchangeably with "regular" functions
+- Arrow functions are often used as callbacks because they are shorter/cleaner to type
+
+js
+arr.forEach(function(element) {});
+// vs
+arr.forEach((element) => {});
+
+### Useful Links
+* [Wikipedia: Callbacks](https://en.wikipedia.org/wiki/Callback_(computer_programming))
+* [MDN: Arrow Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+Functions as Values Example -
+
+```js
+// function sayHello() {
+//   console.log('hello there');
+// }
+
+const sayHello = function() {
+  console.log('hello there');
+};
+
+const funcs = [sayHello];
+
+// funcs.push(sayHello);
+
+console.log(funcs);
+
+funcs[0]();
+
+// sayHello.secretMessage = 'does this work?';
+
+// console.log(sayHello);
+
+// const copy1 = sayHello();
+// const copy2 = sayHello;
+
+// copy2();
+
+// console.log(sayHello.toString());
+// console.log();
+// console.log(copy2.toString());
+
+// const a = 5;
+// const b = a;
+```
+
+Passing Functions Example -
+
+```js
+// function sayHello() {
+//   console.log('hello there');
+// }
+
+const sayHello = function() {
+  console.log('hello there');
+};
+
+const funcs = [sayHello];
+
+// funcs.push(sayHello);
+
+console.log(funcs);
+
+funcs[0]();
+
+// sayHello.secretMessage = 'does this work?';
+
+// console.log(sayHello);
+
+// const copy1 = sayHello();
+// const copy2 = sayHello;
+
+// copy2();
+
+// console.log(sayHello.toString());
+// console.log();
+// console.log(copy2.toString());
+
+// const a = 5;
+// const b = a;
+```
+
+Anonymous Function Example - 
+
+```js
+// naming things is hard
+
+// const username = 'alice';
+// console.log(username);
+
+// console.log('bob');
+// sayHello('carol');
+
+const runMyFunc = function(anotherFunc) {
+  anotherFunc('Carol');
+};
+
+// anotherFunc();
+
+const sayHello = function(name) {
+  console.log(hello there ${name});
+};
+
+runMyFunc(function(name) {
+  console.log(hello there ${name});
+});
+
+runMyFunc(sayHello);
+```
+
+Justification Example
+
+```js
+const names = ['alice', 'bob', 'carol', 'dean', 'elise'];
+
+// for (const name of names) {
+//   console.log(Hello ${name}, welcome to our website!);
+// }
+
+
+const loopingArray = function(arr, callback) {
+  for (const element of arr) {
+    // console.log('element', element);
+    callback(element);
+  }
+};
+
+const whatToDoOnEachIteration = function(name) {
+  console.log(We got this ${name} from the higher order function);
+};
+
+loopingArray(names, whatToDoOnEachIteration);
+console.log();
+names.forEach(whatToDoOnEachIteration);
+// loopingArray([1, 2, 3]);
+
+// for (const index in names) {
+//   console.log(names[index]);
+// }
+
+// for (let i = 0; i < names.length; i += 2) {
+//   console.log(names[i]);
+// }
+
+// console.log('i', i);
+```
+
+Arrow Function Example -
+
+```js
+// added in 2015 with ES6
+// advantages
+// 1. no function keyword needed
+// 2. if only one argument, no parens needed
+// 3. if only one line of code, no curly braces needed
+// 4. if no curly braces, the line of code is implicitly returned
+// 5. arrow funcs do not create this
+
+const myFunc1 = () => {}
+const myFunc2 = name => console.log('hello');
+
+// function sayHello() {}
+// sayHello() => {};
+
+const sayHello1 = function(name) {
+  return hello there ${name};
+};
+
+const sayHello2 = name => hello there ${name};
+
+const returnVal = sayHello2('alice');
+console.log('returnVal', returnVal);
+```
+
+Array Map Example - 
+
+
+```js
+const names = ['alice', 'bob', 'carol', 'dean', 'elise'];
+
+const ourMap = (arr, callback) => {
+  // create the output array
+  const output = [];
+
+  // loop through the provided array
+  for (const element of arr) {
+    // call the provided callback with each element AND capture the return value
+    const returnVal = callback(element);
+
+    // add the returnVal to the output array
+    output.push(returnVal);
+
+    // output.push(callback(element));
+  }
+
+  // return the output array
+  return output;
+};
+
+const doOnEachLoop = (name) => {
+  return hello there ${name};
+};
+
+const outputArray = ourMap(names, doOnEachLoop);
+console.log('names', names);
+console.log('outputArray', outputArray);
+
+console.log();
+
+const outputArray2 = names.map(doOnEachLoop);
+console.log('built-in map', outputArray2);
+```
+
+Nested For-Of Example -
+
+```js
+const myObj = {
+  nestedArrays: [
+    ['a', 'b', 'c'],
+    [1, 2, 3]
+  ]
+};
+
+console.log(myObj);
+
+// const nestedArrays = myObj.nestedArrays;
+
+for (const subArray of myObj.nestedArrays) {
+  console.log('subArray', subArray);
+  for (const subElement of subArray) {
+    console.log('subElement', subElement);
+  }
+}
+```
